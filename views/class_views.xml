@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_school_class_list" model="ir.ui.view">
+        <field name="name">school.class.list</field>
+        <field name="model">school.class</field>
+        <field name="arch" type="xml">
+            <list string="Class" sample="1">
+                <field name="name"/>
+                <field name="teacher_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_school_class_form" model="ir.ui.view">
+        <field name="name">school.class.form</field>
+        <field name="model">school.class</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <form string="Class">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="teacher_id"/>
+                    </group>
+                    <group string="Students">
+                        <field name="student_ids">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="gender"/>
+                                <field name="birth_date"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_class" model="ir.actions.act_window">
+        <field name="name">Classes</field>
+        <field name="res_model">school.class</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_school_classes" name="Classes" parent="menu_school_root"/>
+    <menuitem id="menu_school_class_action" name="All Classes" parent="menu_school_classes" action="action_school_class"/>
+</odoo>
