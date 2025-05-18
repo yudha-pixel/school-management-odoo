@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Scholarship Status -->
+    <record id="category_scholarship" model="category.category">
+        <field name="name">Scholarship</field>
+        <field name="code">SCH</field>
+    </record>
+
+    <record id="category_non_scholarship" model="category.category">
+        <field name="name">Non-Scholarship</field>
+        <field name="code">NSCH</field>
+    </record>
+
+    <!-- Program Track -->
+    <record id="category_science" model="category.category">
+        <field name="name">Science</field>
+        <field name="code">SCI</field>
+    </record>
+
+    <record id="category_arts" model="category.category">
+        <field name="name">Arts</field>
+        <field name="code">ART</field>
+    </record>
+
+    <record id="category_music" model="category.category">
+        <field name="name">Music</field>
+        <field name="code">MUS</field>
+    </record>
+
+    <!-- Entry Type -->
+    <record id="category_regular" model="category.category">
+        <field name="name">Regular</field>
+        <field name="code">REG</field>
+    </record>
+
+    <record id="category_transfer" model="category.category">
+        <field name="name">Transfer</field>
+        <field name="code">TRF</field>
+    </record>
+
+    <record id="category_exchange" model="category.category">
+        <field name="name">Exchange</field>
+        <field name="code">EXC</field>
+    </record>
+
+    <!-- Nationality Group -->
+    <record id="category_local" model="category.category">
+        <field name="name">Local Student</field>
+        <field name="code">LOC</field>
+    </record>
+
+    <record id="category_foreign" model="category.category">
+        <field name="name">Foreign Student</field>
+        <field name="code">FOR</field>
+    </record>
+
+    <!-- Payment Grouping -->
+    <record id="category_full_fee" model="category.category">
+        <field name="name">Full-fee</field>
+        <field name="code">FULL</field>
+    </record>
+
+    <record id="category_partial_fee" model="category.category">
+        <field name="name">Partial-fee</field>
+        <field name="code">PART</field>
+    </record>
+
+    <record id="category_sponsored" model="category.category">
+        <field name="name">Sponsored</field>
+        <field name="code">SPON</field>
+    </record>
+</odoo>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="form_view_users" model="ir.ui.view">
+        <field name="name">User Form</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="child_ids" widget="many2many_tags" readonly="1"/>
+            </xpath>
+
+            <xpath expr="//page[@name='access_rights']//group" position="after">
+                <group>
+                    <group string="Multi Departments" name="Department"
+                           invisible = "'department_count' &lt;= 1">
+                        <field name="dept_id"/>
+                        <field name="department_ids" widget="many2many_tags"/>
+                        <field string="Departments count" name="department_count" invisible="1"/>
+                    </group>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

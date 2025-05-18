@@ -1,4 +1,10 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_school_student,access_school_student,model_school_student,,1,1,1,1
-access_school_teacher,access_school_teacher,model_school_teacher,,1,1,1,1
-access_school_class,access_school_class,model_school_class,,1,1,1,1
+access_student_student,access_student_student,model_student_student,,1,1,1,1
+access_category_category,access_category_category,model_category_category,,1,1,1,1
+access_student_course,access_student_course,model_student_course,,1,1,1,1
+access_department_department,access_department_department,model_department_department,,1,1,1,1
+access_subject_subject,access_subject_subject,model_subject_subject,,1,1,1,1
+access_teacher_teacher,access_teacher_teacher,model_teacher_teacher,,1,1,1,1
+access_class_class,access_class_class,model_class_class,,1,1,1,1
+access_academic_year,access_academic_year,model_academic_year,,1,1,1,1
+access_academic_term,access_academic_term,model_academic_term,,1,1,1,1

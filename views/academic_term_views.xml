@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="list_view_academic_term" model="ir.ui.view">
+        <field name="name">List Academic Term</field>
+        <field name="model">academic.term</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Academic Term">
+                <field name="name"/>
+                <field name="term_start_date"/>
+                <field name="term_end_date"/>
+                <field name="parent_term"/>
+                <field name="academic_year_id" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="form_view_academic_term" model="ir.ui.view">
+        <field name="name">Form Academic Term</field>
+        <field name="model">academic.term</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <form string="Academic Term">
+                <header/>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="term_start_date"/>
+                            <field name="parent_term"/>
+                        </group>
+                        <group>
+                            <field name="academic_year_id"/>
+                            <field name="term_end_date"/>
+                            <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_view_academic_term" model="ir.ui.view">
+        <field name="name">Search Academic term</field>
+        <field name="model">academic.term</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Academic Term">
+                <field name="name"/>
+                <field name="term_start_date"/>
+                <field name="term_end_date"/>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_academic_term">
+        <field name="name">Academic Term</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">academic.term</field>
+        <field name="path">academic-term</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="search_view_academic_term"/>
+    </record>
+</odoo>

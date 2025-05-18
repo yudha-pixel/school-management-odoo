@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="menu_school_root" name="School" web_icon="erpquick_school_management,static/description/icon.png">
+        <menuitem id="menu_school_students" name="Students">
+            <menuitem id="menu_school_student_action" name="All Students" action="act_student_student"/>
+        </menuitem>
+
+        <menuitem id="menu_school_classes" name="Classes">
+            <menuitem id="menu_school_class_action" name="All Classes" action="act_class_class"/>
+        </menuitem>
+
+        <menuitem id="menu_school_teachers" name="Teachers">
+            <menuitem id="menu_school_teacher_action" name="All Teachers" action="act_teacher_teacher"/>
+        </menuitem>
+
+        <menuitem id="menu_school_configuration" name="Configuration">
+            <menuitem id="menu_configuration_academic_year" name="Academic Year" action="act_academic_year"/>
+            <menuitem id="menu_configuration_academic_term" name="Academic Term" action="act_academic_term"/>
+        </menuitem>
+    </menuitem>
+</odoo>

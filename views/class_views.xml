@@ -1,47 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record id="view_school_class_list" model="ir.ui.view">
-        <field name="name">school.class.list</field>
-        <field name="model">school.class</field>
-        <field name="arch" type="xml">
-            <list string="Class" sample="1">
-                <field name="name"/>
-                <field name="teacher_id"/>
-            </list>
-        </field>
-    </record>
-
-    <record id="view_school_class_form" model="ir.ui.view">
-        <field name="name">school.class.form</field>
-        <field name="model">school.class</field>
-        <field name="mode">primary</field>
+    <record id="form_view_class" model="ir.ui.view">
+        <field name="name">Class Form</field>
+        <field name="model">class.class</field>
+        <field name="priority" eval="8"/>
         <field name="arch" type="xml">
             <form string="Class">
+                <header>
+                </header>
                 <sheet>
+                    <div name="button_box" class="oe_button_box">
+                    </div>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible ="active == True"/>
+                    <div style="width:100%;" class="row align-items-center">
+                        <div class="mb16 col-8 col-lg-10 px-4">
+                            <div class="row">
+                                <h2 class="col-12 col-lg-10">
+                                    <field name="name" placeholder="Name" required="1" invisible="1"/>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
                     <group>
-                        <field name="name"/>
-                        <field name="teacher_id"/>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="academic_year_id"/>
+                            <field name="homeroom_teacher_id"/>
+                        </group>
                     </group>
-                    <group string="Students">
-                        <field name="student_ids">
+                    <group string="Students in Class">
+                        <field name="student_ids" nolabel="1">
                             <list editable="bottom">
-                                <field name="name"/>
+                                <field name="first_name"/>
+                                <field name="last_name"/>
                                 <field name="gender"/>
                                 <field name="birth_date"/>
                             </list>
                         </field>
                     </group>
+                    <field name="note"/>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
 
-    <record id="action_school_class" model="ir.actions.act_window">
-        <field name="name">Classes</field>
-        <field name="res_model">school.class</field>
-        <field name="view_mode">list,form</field>
+    <record id="tree_view_class" model="ir.ui.view">
+        <field name="name">Class List</field>
+        <field name="model">class.class</field>
+        <field name="arch" type="xml">
+            <list string="Classes">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="academic_year_id"/>
+                <field name="homeroom_teacher_id"/>
+            </list>
+        </field>
     </record>
 
-    <menuitem id="menu_school_classes" name="Classes" parent="menu_school_root"/>
-    <menuitem id="menu_school_class_action" name="All Classes" parent="menu_school_classes" action="action_school_class"/>
+    <record id="act_class_class" model="ir.actions.act_window">
+        <field name="name">Classes</field>
+        <field name="res_model">class.class</field>
+        <field name="view_mode">list,form</field>
+    </record>
 </odoo>

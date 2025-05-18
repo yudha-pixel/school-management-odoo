@@ -1,47 +1,209 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <!-- LIST VIEW -->
-    <record id="view_school_student_list" model="ir.ui.view">
-        <field name="name">school.student.list</field>
-        <field name="model">school.student</field>
+    <record id="kanban_view_student" model="ir.ui.view">
+        <field name="name">Student Kanban</field>
+        <field name="model">student.student</field>
         <field name="arch" type="xml">
-            <list string="Students" sample="1">
+            <kanban sample="1">
+                <field name="id"/>
+                <field name="image_1920"/>
+                <templates>
+                    <t t-name="card" class="flex-row">
+                        <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                            <aside class="o_kanban_aside_full">
+                            <t t-if="record.image_1920.value">
+                                <div class="o_kanban_image_fill position-relative w-100">
+                                    <field name="image_1920" alt="Contact image" class="h-100" widget="image" options="{'img_class': 'object-fit-cover'}"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="o_kanban_image_fill position-relative w-100">
+                                    <field name="avatar_128" class="h-100" widget="image" options="{'img_class': 'object-fit-cover'}"/>
+                                </div>
+                            </t>
+                        </aside>
+                        <main class="ml16 ps-2 ps-md-0">
+                            <div class="mb-1">
+                                <field name="name" class="mb-0 fw-bold fs-5"/>
+                            </div>
+                            <div t-if="record.city.raw_value or record.country_id.raw_value">
+                                <field name="city"/>
+                                <span t-if="record.city.raw_value and record.country_id.raw_value">, </span>
+                                <field name="country_id"/>
+                            </div>
+                            <field name="email" class="text-truncate"/>
+                            <footer>
+                                <field name="activity_ids" widget="kanban_activity" class="ms-auto mt-auto" style="padding-bottom:6px;"/>
+                            </footer>
+                        </main>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="tree_view_student" model="ir.ui.view">
+        <field name="name">Student List</field>
+        <field name="model">student.student</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <list string="Student">
+                <field name="title" optional="show"/>
                 <field name="name"/>
-                <field name="birth_date"/>
-                <field name="gender"/>
+                <field name="gender" optional="hide"/>
+                <field name="birth_date" optional="hide"/>
                 <field name="class_id"/>
+                <field name="gr_no" optional="hide"/>
+                <field name="mobile" optional="hide"/>
+                <field name="email" optional="hide"/>
+                <field name="blood_group"/>
+                <field name="emergency_contact"/>
+                <field name="nationality"/>
+                <field name="lang"/>
             </list>
         </field>
     </record>
 
-    <!-- FORM VIEW -->
-    <record id="view_school_student_form" model="ir.ui.view">
-        <field name="name">school.student.form</field>
-        <field name="model">school.student</field>
-        <field name="mode">primary</field>
+    <record id="form_view_student" model="ir.ui.view">
+        <field name="name">Student Form</field>
+        <field name="model">student.student</field>
+        <field name="priority" eval="8"/>
         <field name="arch" type="xml">
             <form string="Student">
+                <header>
+                    <button name="action_create_user" type="object" string="Create User" class="oe_highlight"
+                            invisible="user_id != False"/>
+                </header>
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="birth_date"/>
-                        <field name="gender"/>
-                        <field name="class_id"/>
-                    </group>
+                    <div name="button_box" class="oe_button_box">
+                    </div>
+                    <field name="active" invisible="1"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="bg-danger" invisible ="active == True"/>
+                    <div style="width:100%;" class="row align-items-center">
+                        <div class="mb16 col-8 col-lg-10 px-4">
+                            <div class="row">
+                                <h2 class="col-12 col-lg-10">
+                                    <field name="gr_no" readonly="1"/>
+                                </h2>
+                                <h2 class="col-12 col-lg-10">
+                                    <field name="name" placeholder="Name" required="1" invisible="1"/>
+                                    <table>
+                                        <tr>
+                                            <td style="padding-right:10px;">
+                                                <field name="first_name" required="1" placeholder="First Name"/>
+                                            </td>
+                                            <td style="padding-right:10px;">
+                                                <field name="middle_name" placeholder="Middle Name"/>
+                                            </td>
+                                            <td style="padding-right:10px;">
+                                                <field name="last_name" placeholder="Last Name" required="1"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </h2>
+                            </div>
+                        </div>
+                        <div class="col-4 col-lg-2">
+                            <field name="image_1920" widget="image" class="oe_left oe_avatar" />
+                        </div>
+                    </div>
+                    <notebook colspan="4">
+                        <page name="personal_information" string="Personal Information">
+                            <group name="personal_detail">
+                                <group>
+                                    <field name="gender" required="1"/>
+                                    <field name="birth_date"/>
+                                    <field name="class_id" readonly="1"/>
+                                    <label for="type" invisible="1"/>
+                                    <div name="div_type" invisible="1">
+                                        <field class="oe_inline" name="type"/>
+                                    </div>
+                                    <label for="street" string="Address"/>
+                                    <div name="o_address_format">
+                                        <field name="street" placeholder="Street..."/>
+                                        <field name="street2" placeholder="Street2"/>
+                                        <div class="address_format">
+                                            <field name="city" placeholder="City" style="width: 40%"/>
+                                            <field name="state_id" class="oe_no_button" placeholder="State"
+                                                   style="width: 37%" options="{&quot;no_open&quot;: True}"/>
+                                            <field name="zip" placeholder="ZIP" style="width: 20%"/>
+                                        </div>
+                                        <field name="country_id" placeholder="Country" class="oe_no_button"
+                                               options="{&quot;no_open&quot;: True}"/>
+                                    </div>
+                                    <field name="emergency_contact" context="{'show_address': 1}"
+                                           options="{&quot;always_reload&quot;: True}"/>
+                                </group>
+                                <group>
+                                    <field name="email"/>
+                                    <field name="mobile"/>
+                                    <field name="lang"/>
+                                    <field name="blood_group"/>
+                                    <field name="nationality"/>
+                                    <field name="visa_info"/>
+                                    <field name="category_id"/>
+                                    <field name="user_id" string="User" readonly="1" invisible="not user_id"/>
+                                    <field name="partner_id" string="Contact" readonly="1" required="0" invisible="not partner_id"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
+                <chatter/>
             </form>
         </field>
     </record>
 
-    <!-- ACTION -->
-    <record id="action_school_student" model="ir.actions.act_window">
-        <field name="name">Students</field>
-        <field name="res_model">school.student</field>
-        <field name="view_mode">list,form</field>
+    <record id="activity_view_student" model="ir.ui.view">
+        <field name="name">students.activity</field>
+        <field name="model">student.student</field>
+        <field name="arch" type="xml">
+            <activity string="Contacts">
+                <field name="id"/>
+                <templates>
+                    <div t-name="activity-box">
+                        <img t-att-src="activity_image('student.student', 'image_1920', record.id.raw_value)" role="img"
+                             t-att-title="record.name.value" t-att-alt="record.name.value"/>
+                        <div class="ms-2">
+                            <field name="name" display="full" class="o_text_block"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
     </record>
 
-    <!-- MENUS -->
-    <menuitem id="menu_school_root" name="School"/>
-    <menuitem id="menu_school_students" name="Students" parent="menu_school_root"/>
-    <menuitem id="menu_school_student_action" name="All Students" parent="menu_school_students" action="action_school_student"/>
+    <record id="search_view_student" model="ir.ui.view">
+        <field name="name">Student Search</field>
+        <field name="model">student.student</field>
+        <field name="priority" eval="8"/>
+        <field name="arch" type="xml">
+            <search string="Student">
+                <field name="name"/>
+                <field name="blood_group"/>
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter name="blood_group" string="Blood Group"
+                            domain="[]" context="{'group_by':'blood_group'}"/>
+                    <filter name="nationality" string="Nationality"
+                            domain="[]" context="{'group_by':'nationality'}"/>
+                    <filter name="language" string="Language"
+                            domain="[]" context="{'group_by':'lang'}"/>
+                    <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_student_student">
+        <field name="name">Students</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">student.student</field>
+        <field name="path">students</field>
+        <field name="binding_view_types">form</field>
+        <field name="view_mode">kanban,list,form,activity</field>
+        <field name="search_view_id" ref="search_view_student"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
 </odoo>
