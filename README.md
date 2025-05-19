@@ -13,7 +13,7 @@ A custom **Odoo 18 Community** module for managing school data, developed by ERP
 
 1. Clone this repo to your Odoo `addons` directory:
    ```bash
-   git clone https://github.com/yudha-pixel/erpquick_school_management.git
+   git clone https://github.com/yudha-pixel/school-management-odoo.git
 2. Restart Odoo and update app list.
 3. earch for "School Management" in Apps and install it.
 ✅ Make sure your Odoo instance is running in developer mode to see all menus.
