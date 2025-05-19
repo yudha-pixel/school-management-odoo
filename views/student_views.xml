@@ -57,7 +57,7 @@
                 <field name="mobile" optional="hide"/>
                 <field name="email" optional="hide"/>
                 <field name="blood_group"/>
-                <field name="emergency_contact"/>
+                <field name="emergency_contact_id"/>
                 <field name="nationality"/>
                 <field name="lang"/>
             </list>
@@ -73,6 +73,11 @@
                 <header>
                     <button name="action_create_user" type="object" string="Create User" class="oe_highlight"
                             invisible="user_id != False"/>
+                    <button name="action_create_emergency_contact"
+                            string="Add Emergency Contact"
+                            type="object"
+                            class="oe_highlight"
+                            invisible="emergency_contact_id != False"/>
                 </header>
                 <sheet>
                     <div name="button_box" class="oe_button_box">
@@ -131,8 +136,8 @@
                                         <field name="country_id" placeholder="Country" class="oe_no_button"
                                                options="{&quot;no_open&quot;: True}"/>
                                     </div>
-                                    <field name="emergency_contact" context="{'show_address': 1}"
-                                           options="{&quot;always_reload&quot;: True}"/>
+                                    <field name="emergency_contact_id" options="{&quot;always_reload&quot;: True}"
+                                           context="{'show_address': 1}" readonly="1"/>
                                 </group>
                                 <group>
                                     <field name="email"/>

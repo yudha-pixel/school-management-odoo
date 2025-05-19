@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="emergency_contact_view_tree" model="ir.ui.view">
+        <field name="name">res.partner.emergency.contact.tree</field>
+        <field name="model">res.partner</field>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <list string="Emergency Contacts">
+                <field name="name"/>
+                <field name="mobile"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="category_id" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="emergency_contact_view_form" model="ir.ui.view">
+        <field name="name">Emergency Contact Form</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form string="Emergency Contact">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <div style="width:100%;" class="row align-items-center">
+                        <div class="mb16 col-8 col-lg-10 px-4">
+                            <div class="row">
+                                <h2 class="col-3 mb-2">
+                                    <field name="title" placeholder="Title"/>
+                                </h2>
+                                <h2 class="col-9">
+                                    <field id="individual" options="{'line_breaks': False}" widget="text" class="text-break" name="name" default_focus="1" placeholder="e.g. Brandon Freeman" invisible="is_company" required="type == 'contact'"/>
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                    <group>
+                        <group>
+                            <span class="o_form_label o_td_label o_address_type" name="address_name">
+                                <field name="type" invisible="is_company" readonly="user_ids" required="not is_company" class="fw-bold"/>
+                                <span invisible="not is_company">Address</span>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street"
+                                    readonly="type == 'contact' and parent_id"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                    readonly="type == 'contact' and parent_id"/>
+                                <field name="city" placeholder="City" class="o_address_city"
+                                    readonly="type == 'contact' and parent_id"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}"
+                                    readonly="type == 'contact' and parent_id" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                    readonly="type == 'contact' and parent_id"/>
+                                <div name="partner_address_country" class="d-flex justify-content-between">
+                                    <field name="country_id" placeholder="Country" class="o_address_country" options='{"no_open": True, "no_create": True}'
+                                        readonly="type == 'contact' and parent_id"/>
+                                </div>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="phone" widget="phone"/>
+                            <field name="mobile" widget="phone"/>
+                            <field name="email" widget="email" context="{'gravatar_image': True}" required="user_ids"/>
+                            <field name="lang" invisible="active_lang_count &lt;= 1"/>
+                            <field name="category_id" widget="many2many_tags" options="{'color_field': 'color'}" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Linked Emergency Contacts" invisible="not is_student_emergency_contact and not is_teacher_emergency_contact">
+                        <field name="is_student_emergency_contact" invisible="1"/>
+                        <field mode="list" name="student_emergency_contact_of_ids" widget="one2many_list" colspan="4"
+                               nolabel="1" options="{'no_quick_create':True,'no_create_edit':True}"
+                               invisible="not is_student_emergency_contact">
+                            <list>
+                                <field name="first_name"/>
+                                <field name="last_name"/>
+                                <field name="class_id"/>
+                            </list>
+                        </field>
+                        <field name="is_teacher_emergency_contact" invisible="1"/>
+                        <field mode="list" name="teacher_emergency_contact_of_ids" widget="one2many_list" colspan="4"
+                               nolabel="1" options="{'no_quick_create':True,'no_create_edit':True}"
+                               invisible="not is_teacher_emergency_contact">
+                            <list>
+                                <field name="first_name"/>
+                                <field name="last_name"/>
+                                <field name="main_department_id"/>
+                            </list>
+                        </field>
+                    </group>
+                </sheet>
+                <!-- Chatter -->
+                <chatter reload_on_attachment="True"/>
+            </form>
+        </field>
+    </record>
+
+    <record id="act_emergency_contact" model="ir.actions.act_window">
+        <field name="name">Emergency Contacts</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('emergency_contact_view_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('emergency_contact_view_form')})
+            ]"/>
+        <field name="domain">[('category_id.name', 'ilike', 'Emergency Contact')]</field>
+    </record>
+
+</odoo>

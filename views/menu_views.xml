@@ -1,21 +1,40 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <menuitem id="menu_school_root" name="School" web_icon="erpquick_school_management,static/description/icon.png">
-        <menuitem id="menu_school_students" name="Students">
-            <menuitem id="menu_school_student_action" name="All Students" action="act_student_student"/>
-        </menuitem>
+    <menuitem id="menu_school_root" name="School" web_icon="erpquick_school_management,static/description/school_icon.png"/>
 
-        <menuitem id="menu_school_classes" name="Classes">
-            <menuitem id="menu_school_class_action" name="All Classes" action="act_class_class"/>
-        </menuitem>
+    <!-- Master Data -->
+    <menuitem id="menu_school_master_data" name="Master Data" parent="menu_school_root" sequence="1"/>
 
-        <menuitem id="menu_school_teachers" name="Teachers">
-            <menuitem id="menu_school_teacher_action" name="All Teachers" action="act_teacher_teacher"/>
-        </menuitem>
+    <menuitem id="menu_school_student_action"
+              name="Students"
+              parent="menu_school_master_data"
+              action="act_student_student"/>
 
-        <menuitem id="menu_school_configuration" name="Configuration">
-            <menuitem id="menu_configuration_academic_year" name="Academic Year" action="act_academic_year"/>
-            <menuitem id="menu_configuration_academic_term" name="Academic Term" action="act_academic_term"/>
-        </menuitem>
-    </menuitem>
+    <menuitem id="menu_school_teacher_action"
+              name="Teachers"
+              parent="menu_school_master_data"
+              action="act_teacher_teacher"/>
+
+    <menuitem id="menu_school_emergency_contact_action"
+              name="Emergency Contacts"
+              parent="menu_school_master_data"
+              action="act_emergency_contact"/>
+
+    <menuitem id="menu_school_class_action"
+              name="Classes"
+              parent="menu_school_master_data"
+              action="act_class_class"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_school_configuration" name="Configuration" parent="menu_school_root" sequence="2"/>
+
+    <menuitem id="menu_configuration_academic_year"
+              name="Academic Year"
+              parent="menu_school_configuration"
+              action="act_academic_year"/>
+
+    <menuitem id="menu_configuration_academic_term"
+              name="Academic Term"
+              parent="menu_school_configuration"
+              action="act_academic_term"/>
 </odoo>

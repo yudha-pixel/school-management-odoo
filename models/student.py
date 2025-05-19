@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class SchoolStudent(models.Model):
     _name = 'student.student'
@@ -26,7 +27,7 @@ class SchoolStudent(models.Model):
         ('o', 'Other')
     ], 'Gender', required=True, default='m')
     nationality = fields.Many2one('res.country', 'Nationality')
-    emergency_contact = fields.Many2one('res.partner', 'Emergency Contact')
+    emergency_contact_id = fields.Many2one('res.partner', 'Emergency Contact')
     visa_info = fields.Char('Visa Info', size=64)
     id_number = fields.Char('ID Card Number', size=64)
     partner_id = fields.Many2one('res.partner', 'Partner', required=True, ondelete="cascade")
@@ -66,13 +67,36 @@ class SchoolStudent(models.Model):
             student.name = f"{student.first_name or ''} {student.middle_name or ''} {student.last_name or ''}".strip()
 
     def action_create_user(self):
-        for student in self:
-            if not student.user_id:
-                user = self.env['res.users'].create({
-                    'name': f"{student.first_name} {student.last_name}",
-                    'login': student.email,
-                    'email': student.email,
-                    'partner_id': student.partner_id.id,
-                    'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])],
-                })
-                student.user_id = user.id
+        self.ensure_one()
+        if self.user_id:
+            raise ValidationError("User is already created")
+
+        if not self.email:
+            raise ValidationError("Please set an email address before creating a user.")
+
+        if not self.user_id:
+            user = self.env['res.users'].create([{
+                'name': f"{self.first_name} {self.last_name}",
+                'login': self.email,
+                'email': self.email,
+                'partner_id': self.partner_id.id,
+                'groups_id': [(6, 0, [self.env.ref('base.group_portal').id])],
+            }])
+            self.user_id = user.id
+
+    def action_create_emergency_contact(self):
+        self.ensure_one()
+        emergency_category = self.env.ref('erpquick_school_management.res_partner_category_student_ec')
+        return {
+            'name': 'Create Emergency Contact',
+            'type': 'ir.actions.act_window',
+            'res_model': 'res.partner',
+            'view_mode': 'form',
+            'view_id': self.env.ref('erpquick_school_management.emergency_contact_view_form').id,
+            'target': 'new',
+            'context': {
+                'default_category_id': [(6, 0, [emergency_category.id])],
+                'default_company_type': 'person',
+                'default_student_emergency_contact_of_ids': [(6, 0, [self.id])]
+            }
+        }

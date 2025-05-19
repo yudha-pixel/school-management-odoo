@@ -12,6 +12,7 @@
         'security/ir.model.access.csv',
         'views/res_company_views.xml',
         'views/res_users_views.xml',
+        'views/res_partner_views.xml',
         'views/student_views.xml',
         'views/teacher_views.xml',
         'views/class_views.xml',
