@@ -1,4 +1,7 @@
 # ERPQuick School Management Module
+![Odoo 18](https://img.shields.io/badge/Odoo-18.0-blue)
+![Status](https://img.shields.io/badge/status-in%20development-yellow)
+
 
 A custom **Odoo 18 Community** module for managing school data, developed by ERPQuick freelance team.
 
