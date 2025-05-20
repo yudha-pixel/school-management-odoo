@@ -1,0 +1,39 @@
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Odoo logs and database dumps
+*.log
+*.sql
+*.dump
+
+# VSCode / PyCharm project settings
+.vscode/
+.idea/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Python virtual environments
+.env/
+.venv/
+env/
+venv/
+
+# Compiled assets
+*.zip
+*.egg-info/
+
+# Odoo generated files (optional if you're exporting)
+*.pot
+*.po
+*.mo
+
+# Linux/mac backup files
+*~
+*.swp
+*.bak
+*.orig
+*.tmp
