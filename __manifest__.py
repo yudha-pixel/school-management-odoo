@@ -4,10 +4,11 @@
 {
     'name': 'ERPQuick School Management',
     'version': '1.0',
+    'depends': ['board', 'web', 'website', 'hr', 'contacts'],
+    'category': 'Education',
+    'author': 'ERPQuick',
     'license': 'LGPL-3',
     'summary': 'School Management System',
-    'author': 'ERPQuick',
-    'depends': ['board', 'web', 'website', 'hr', 'contacts'],
     'data': [
         'security/ir.model.access.csv',
         'views/res_company_views.xml',
